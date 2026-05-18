@@ -458,6 +458,66 @@
   .animate-on-scroll { opacity: 0; transform: translateY(25px); transition: all 0.7s ease; }
   .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
 
+
+/* VIDEOS SECTION */
+
+.videos {
+  background: #F7F1E4;
+}
+
+.videos-text {
+  max-width: 650px;
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--brown);
+  margin-bottom: 50px;
+}
+
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+.video-box {
+  background: #fff;
+  overflow: hidden;
+  transition: 0.4s;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+.video-box:hover {
+  transform: translateY(-6px);
+}
+
+.video-box video {
+  width: 100%;
+  height: 520px;
+  object-fit: cover;
+  display: block;
+  background: #000;
+}
+
+.video-caption {
+  padding: 18px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  color: var(--deep);
+}
+
+@media (max-width: 768px) {
+
+  .video-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .video-box video {
+    height: 460px;
+  }
+
+}
+
+
   @media (max-width: 768px) {
     .hamburger { display: flex; }
     .nav-cta { display: none; }
@@ -717,7 +777,57 @@
   </div>
 </section>
 <!-- ===================== END GALLERY ===================== -->
+<!-- VIDEOS SECTION -->
+<section class="videos" id="videos">
 
+  <div class="section-label">Wedding Highlights</div>
+
+  <h2>Experience The <em>Celebration</em></h2>
+
+  <p class="videos-text">
+    Real baraat moments, DJ nights, wedding entries and unforgettable celebrations captured live.
+  </p>
+
+  <div class="video-grid">
+
+    <div class="video-box animate-on-scroll">
+      <video controls playsinline preload="metadata">
+        <source src="videos/video1.mp4" type="video/mp4">
+      </video>
+      <div class="video-caption">Bride & Groom Grand Entry</div>
+    </div>
+
+    <div class="video-box animate-on-scroll">
+      <video controls playsinline preload="metadata">
+        <source src="videos/video2.mp4" type="video/mp4">
+      </video>
+      <div class="video-caption">Royal Baraat Celebration</div>
+    </div>
+
+    <div class="video-box animate-on-scroll">
+      <video controls playsinline preload="metadata">
+        <source src="videos/video3.mp4" type="video/mp4">
+      </video>
+      <div class="video-caption">Wedding Stage Moments</div>
+    </div>
+
+    <div class="video-box animate-on-scroll">
+      <video controls playsinline preload="metadata">
+        <source src="videos/video4.mp4" type="video/mp4">
+      </video>
+      <div class="video-caption">Couple Entry Highlights</div>
+    </div>
+
+    <div class="video-box animate-on-scroll">
+      <video controls playsinline preload="metadata">
+        <source src="videos/video5.mp4" type="video/mp4">
+      </video>
+      <div class="video-caption">Grand Wedding Celebration</div>
+    </div>
+
+  </div>
+
+</section>
 <!-- TESTIMONIALS -->
 <section class="testimonials" id="testimonials">
   <div class="section-label">Happy Couples</div>
