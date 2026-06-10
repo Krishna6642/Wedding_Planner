@@ -69,6 +69,7 @@
   }
   .nav-cta:hover { background: var(--gold-dark); transform: translateY(-1px); }
 
+  /* ===================== HERO SECTION ===================== */
   .hero {
     min-height: 100vh;
     display: flex;
@@ -76,6 +77,12 @@
     position: relative;
     overflow: hidden;
     padding: 120px 60px 80px;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+  }
+  .hero.hide-hero {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
   }
   .hero-bg {
     position: absolute; inset: 0;
@@ -175,6 +182,166 @@
     animation: floatAnim 6s ease-in-out infinite;
   }
 
+  /* ===================== IMAGE SWIPER ===================== */
+  #heroSwiper {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 50;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+    background: #000;
+  }
+  #heroSwiper.swiper-visible {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .swiper-slide-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1s ease;
+    filter: brightness(0.75);
+  }
+  .swiper-slide-img.active {
+    opacity: 1;
+  }
+
+  .swiper-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 80px;
+    background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .swiper-caption {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(22px, 4vw, 42px);
+    color: #fff;
+    font-weight: 300;
+    font-style: italic;
+    text-align: center;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+    opacity: 0;
+    transform: translateY(15px);
+    transition: all 0.6s ease 0.3s;
+  }
+  .swiper-caption.caption-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .swiper-caption small {
+    display: block;
+    font-size: clamp(11px, 1.5vw, 15px);
+    font-family: 'Jost', sans-serif;
+    font-style: normal;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-top: 8px;
+  }
+
+  .swiper-nav-brand {
+    position: absolute;
+    top: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+    pointer-events: none;
+    text-align: center;
+  }
+  .swiper-nav-brand span { color: var(--gold-light); font-style: italic; }
+
+  .swiper-dots {
+    position: absolute;
+    bottom: 35px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 20;
+  }
+  .swiper-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.4);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .swiper-dot.dot-active {
+    background: var(--gold);
+    width: 24px;
+    border-radius: 4px;
+  }
+
+  .swiper-progress {
+    position: absolute;
+    bottom: 0; left: 0;
+    height: 3px;
+    background: var(--gold);
+    width: 0%;
+    z-index: 20;
+    transition: width linear;
+  }
+
+  .swiper-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 20;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: #fff;
+    width: 48px; height: 48px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    backdrop-filter: blur(6px);
+  }
+  .swiper-arrow:hover { background: rgba(201,168,76,0.5); border-color: var(--gold); }
+  .swiper-arrow.arrow-left { left: 24px; }
+  .swiper-arrow.arrow-right { right: 24px; }
+
+  .swiper-skip {
+    position: absolute;
+    top: 28px;
+    right: 28px;
+    z-index: 20;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.8);
+    padding: 8px 18px;
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    backdrop-filter: blur(6px);
+  }
+  .swiper-skip:hover { background: var(--gold); color: var(--deep); border-color: var(--gold); }
+
+  /* ===================== END SWIPER ===================== */
+
   section { padding: 100px 60px; }
   .section-label {
     font-size: 10px; letter-spacing: 4px;
@@ -262,7 +429,7 @@
   }
   .btn-primary:hover { background: var(--gold); color: var(--deep); transform: translateY(-2px); }
 
-  /* ===================== GALLERY - UPDATED WITH REAL IMAGES ===================== */
+  /* GALLERY */
   .gallery { background: var(--cream); overflow: hidden; }
   .gallery-intro { max-width: 500px; }
   .gallery-intro p {
@@ -283,8 +450,6 @@
     background: #1A1208;
   }
   .gallery-item:first-child { grid-row: 1 / 3; }
-
-  /* Real image inside gallery */
   .gallery-item img {
     width: 100%;
     height: 100%;
@@ -297,7 +462,6 @@
     transform: scale(1.08);
     filter: brightness(0.6);
   }
-
   .gallery-item:hover .gallery-overlay { opacity: 1; }
   .gallery-overlay {
     position: absolute; inset: 0;
@@ -320,7 +484,6 @@
     background: rgba(0,0,0,0.3); padding: 4px 10px;
     backdrop-filter: blur(4px);
   }
-  /* Gold corner accent on hover */
   .gallery-item::after {
     content: '';
     position: absolute;
@@ -331,7 +494,127 @@
   }
   .gallery-item:hover::after { height: 100%; }
 
-  /* ===================== END GALLERY ===================== */
+  /* ===================== LIGHTBOX ===================== */
+  .lightbox-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(10,7,2,0.96);
+    backdrop-filter: blur(8px);
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .lightbox-overlay.active { display: flex; }
+
+  .lightbox-main {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 70px;
+  }
+  .lightbox-main img {
+    max-width: 100%;
+    max-height: 72vh;
+    object-fit: contain;
+    border: 1px solid rgba(201,168,76,0.2);
+    display: block;
+    transition: opacity 0.3s ease;
+  }
+  .lightbox-main img.lb-fade { opacity: 0; }
+
+  .lightbox-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(201,168,76,0.15);
+    border: 1px solid rgba(201,168,76,0.3);
+    color: var(--gold);
+    width: 50px; height: 50px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    cursor: pointer;
+    transition: all 0.3s;
+    z-index: 2;
+  }
+  .lightbox-arrow:hover { background: var(--gold); color: var(--deep); }
+  .lightbox-arrow.lb-left { left: 10px; }
+  .lightbox-arrow.lb-right { right: 10px; }
+
+  .lightbox-close {
+    position: absolute;
+    top: 20px; right: 24px;
+    background: rgba(201,168,76,0.15);
+    border: 1px solid rgba(201,168,76,0.3);
+    color: var(--gold);
+    width: 42px; height: 42px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    cursor: pointer;
+    transition: all 0.3s;
+    z-index: 10001;
+  }
+  .lightbox-close:hover { background: var(--gold); color: var(--deep); }
+
+  .lightbox-caption {
+    margin-top: 20px;
+    text-align: center;
+  }
+  .lightbox-caption span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-style: italic;
+    color: rgba(250,246,238,0.85);
+    font-weight: 300;
+  }
+  .lightbox-caption small {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 5px;
+  }
+
+  .lightbox-counter {
+    margin-top: 12px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: rgba(250,246,238,0.3);
+    text-transform: uppercase;
+  }
+
+  .lightbox-thumbs {
+    display: flex;
+    gap: 8px;
+    margin-top: 18px;
+    overflow-x: auto;
+    max-width: 90vw;
+    padding-bottom: 4px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--gold) transparent;
+  }
+  .lightbox-thumbs::-webkit-scrollbar { height: 4px; }
+  .lightbox-thumbs::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+  .lb-thumb {
+    flex-shrink: 0;
+    width: 60px; height: 60px;
+    object-fit: cover;
+    cursor: pointer;
+    opacity: 0.45;
+    border: 2px solid transparent;
+    transition: all 0.3s;
+  }
+  .lb-thumb.lb-thumb-active {
+    opacity: 1;
+    border-color: var(--gold);
+  }
+  .lb-thumb:hover { opacity: 0.85; }
+  /* ===================== END LIGHTBOX ===================== */
 
   /* TESTIMONIALS */
   .testimonials { background: #F0E8D5; position: relative; overflow: hidden; }
@@ -410,7 +693,7 @@
 
   /* FOOTER */
   footer { background: #0D0A04; padding: 60px 60px 30px; border-top: 1px solid rgba(201,168,76,0.1); }
-  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px; margin-bottom: 50px; }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 50px; margin-bottom: 50px; }
   .footer-brand .nav-logo { font-size: 32px; margin-bottom: 20px; display: block; }
   .footer-brand p { font-size: 13px; color: rgba(250,246,238,0.4); line-height: 1.8; font-weight: 300; }
   .footer-col h4 { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
@@ -418,6 +701,23 @@
   .footer-col ul li { margin-bottom: 12px; }
   .footer-col ul li a { font-size: 13px; color: rgba(250,246,238,0.4); text-decoration: none; transition: color 0.3s; font-weight: 300; }
   .footer-col ul li a:hover { color: var(--gold); }
+
+  /* Instagram link style */
+  .footer-insta-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: rgba(250,246,238,0.4);
+    text-decoration: none;
+    font-weight: 300;
+    transition: color 0.3s;
+    padding: 6px 0;
+  }
+  .footer-insta-link:hover { color: var(--gold); }
+  .footer-insta-link svg { flex-shrink: 0; transition: stroke 0.3s; }
+  .footer-insta-link:hover svg { stroke: var(--gold); }
+
   .footer-bottom {
     border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px;
     display: flex; justify-content: space-between; align-items: center;
@@ -458,65 +758,20 @@
   .animate-on-scroll { opacity: 0; transform: translateY(25px); transition: all 0.7s ease; }
   .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
 
-
-/* VIDEOS SECTION */
-
-.videos {
-  background: #F7F1E4;
-}
-
-.videos-text {
-  max-width: 650px;
-  font-size: 15px;
-  line-height: 1.8;
-  color: var(--brown);
-  margin-bottom: 50px;
-}
-
-.video-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 25px;
-}
-
-.video-box {
-  background: #fff;
-  overflow: hidden;
-  transition: 0.4s;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-}
-
-.video-box:hover {
-  transform: translateY(-6px);
-}
-
-.video-box video {
-  width: 100%;
-  height: 520px;
-  object-fit: cover;
-  display: block;
-  background: #000;
-}
-
-.video-caption {
-  padding: 18px;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 22px;
-  color: var(--deep);
-}
-
-@media (max-width: 768px) {
-
-  .video-grid {
-    grid-template-columns: 1fr;
+  /* VIDEOS SECTION */
+  .videos { background: #F7F1E4; }
+  .videos-text {
+    max-width: 650px; font-size: 15px; line-height: 1.8;
+    color: var(--brown); margin-bottom: 50px;
   }
-
-  .video-box video {
-    height: 460px;
+  .video-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
+  .video-box {
+    background: #fff; overflow: hidden; transition: 0.4s;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
   }
-
-}
-
+  .video-box:hover { transform: translateY(-6px); }
+  .video-box video { width: 100%; height: 520px; object-fit: cover; display: block; background: #000; }
+  .video-caption { padding: 18px; font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--deep); }
 
   @media (max-width: 768px) {
     .hamburger { display: flex; }
@@ -538,10 +793,17 @@
     .footer-top { grid-template-columns: 1fr 1fr; }
     .footer-bottom { flex-direction: column; gap: 15px; text-align: center; }
     .form-row { grid-template-columns: 1fr; }
+    .video-grid { grid-template-columns: 1fr; }
+    .video-box video { height: 460px; }
+    .swiper-arrow { width: 38px; height: 38px; font-size: 16px; }
+    .swiper-arrow.arrow-left { left: 12px; }
+    .swiper-arrow.arrow-right { right: 12px; }
+    .swiper-skip { top: 18px; right: 14px; padding: 6px 12px; font-size: 10px; }
   }
 </style>
 </head>
 <body>
+
 
 <nav>
   <div class="nav-logo">GuRu Digital <span>Sound's</span> and <span>Events</span></div>
@@ -568,6 +830,21 @@
 </div>
 
 <section class="hero" id="home">
+  <div id="heroSwiper">
+    <img class="swiper-slide-img active" src="images/banner1.jpeg" alt="Grand Wedding Mandap" />
+    <img class="swiper-slide-img" src="images/banner2.jpeg" alt="Fairy Light Décor" />
+    <img class="swiper-slide-img" src="images/banner3.jpeg" alt="Floral Stage" />
+    <img class="swiper-slide-img" src="images/banner4.jpeg" alt="DJ Night" />
+    <img class="swiper-slide-img" src="images/banner5.jpeg" alt="Tent Setup" />
+    <div class="swiper-overlay">
+      <div class="swiper-caption" id="swiperCaption">Grand Wedding Mandap<small>Indore, 2026</small></div>
+    </div>
+    <button class="swiper-arrow arrow-left" onclick="swiperPrev()">&#8592;</button>
+    <button class="swiper-arrow arrow-right" onclick="swiperNext()">&#8594;</button>
+    <div class="swiper-dots" id="swiperDots"></div>
+    <div class="swiper-progress" id="swiperProgress"></div>
+  </div>
+
   <div class="hero-bg"></div>
   <div class="hero-pattern"></div>
   <svg class="hero-corner-tl" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
@@ -606,75 +883,16 @@
   <h2 style="color:var(--cream)">Complete <em>Wedding</em> Services</h2>
   <p class="services-intro">Every element, every detail — we handle it all so you can simply enjoy your most special day.</p>
   <div class="services-grid">
-    <div class="service-card animate-on-scroll">
-      <span class="service-icon">⛺</span>
-      <div class="service-title">Tent & Shamiana</div>
-      <p class="service-desc">Premium quality tents, shamianas, mandaps, and canopies — beautifully decorated for indoor and outdoor weddings.</p>
-      <div class="service-items"><span>Royal Tent</span><span>Shamiana</span><span>Mandap</span><span>Canopy</span><span>Pergola</span></div>
-    </div>
-    <div class="service-card animate-on-scroll">
-      <span class="service-icon">💡</span>
-      <div class="service-title">Lighting & Décor</div>
-      <p class="service-desc">Magical lighting setups — LED walls, fairy lights, draping lights, and dramatic stage illumination.</p>
-      <div class="service-items"><span>LED Wall</span><span>Fairy Lights</span><span>Spotlights</span><span>Neon Signs</span><span>Stage Lighting</span></div>
-    </div>
-    <div class="service-card animate-on-scroll">
-      <span class="service-icon">🎵</span>
-      <div class="service-title">DJ & Sound System</div>
-      <p class="service-desc">Top-tier DJ setup with professional sound systems, fog machines, and laser shows for unforgettable celebrations.</p>
-      <div class="service-items"><span>DJ Setup</span><span>Sound System</span><span>Digital DJ Wheels for Barat</span><span>Laser Show</span><span>Fog Machine</span></div>
-    </div>
-    <div class="service-card animate-on-scroll">
-      <span class="service-icon">🌺</span>
-      <div class="service-title">Flower & Floral Art</div>
-      <p class="service-desc">Exquisite floral arrangements — from mandap decoration to stage backdrops, path flowers, and car decoration.</p>
-      <div class="service-items"><span>Mandap Flowers</span><span>Stage Backdrop</span><span>Car Decoration</span><span>Table Centerpiece</span></div>
-    </div>
-    <div class="service-card animate-on-scroll">
-      <span class="service-icon">🍽️</span>
-      <div class="service-title">Catering & Hospitality</div>
-      <p class="service-desc">Authentic Indian cuisine with live counters, traditional thali setups, and premium catering for all guests.</p>
-      <div class="service-items"><span>Live Counters</span><span>Buffet Setup</span><span>Welcome Drinks</span><span>Dessert Counter</span></div>
-    </div>
-    <div class="service-card animate-on-scroll">
-      <span class="service-icon">📸</span>
-      <div class="service-title">Photography & Video</div>
-      <p class="service-desc">Cinematic wedding films and stunning photographs — candid, pre-wedding shoots, and drone coverage.</p>
-      <div class="service-items"><span>Candid Photos</span><span>Cinematic Video</span><span>Traditional Video Shoot</span><span>Drone Coverage</span><span>Pre-Wedding</span></div>
-    </div>
-    <div class="service-card animate-on-scroll">
-      <span class="service-icon">🎭</span>
-      <div class="service-title">Entertainment</div>
-      <p class="service-desc">Sanai-Chowki, Dhol players, live band, dance performances, and entertainment acts for every function.</p>
-      <div class="service-items"><span>Dhol Waale</span><span>Live Band</span><span>Sangeet Night</span><span>Dance Show</span><span>Fireworks</span></div>
-    </div>
-    <div class="service-card animate-on-scroll">
-      <span class="service-icon">🛋️</span>
-      <div class="service-title">Furniture & Setup</div>
-      <p class="service-desc">Elegant furniture rental — royal chairs, sofas, tables, and complete stage setup for a grand look.</p>
-      <div class="service-items"><span>Royal Stage</span><span>Chairs & Sofas</span><span>Photo Booth</span><span>Gate Decoration</span></div>
-    </div>
-    <div class="service-card animate-on-scroll">
-      <span class="service-icon">🚗</span>
-      <div class="service-title">Guest Management</div>
-      <p class="service-desc">Complete guest logistics — transport, accommodation coordination, welcome kits, and hospitality management.</p>
-      <div class="service-items"><span>Baraat Setup</span><span>Guest Transport</span><span>Welcome Kits</span><span>Parking Mgmt</span></div>
-    </div>
-    <div class="service-card animate-on-scroll">
-      <span class="service-icon">🎆</span>
-      <div class="service-title">Wedding Entries</div>
-      <p class="service-desc">Royal & dramatic entries for the groom, bride, and baraat — make a stunning grand entrance that everyone remembers forever.</p>
-      <div class="service-items">
-  <span>🔥 Pyro Entry</span>
-  <span>🐎 Royal Ghodi</span>
-  <span>👑 Wedding Baggi</span>
-  <span>💡 Lighting Chatri</span>
-  <span>💐 Flower Shower</span>
-  <span>🎭 Dhol-Tasha</span>
-    <span> All Types Entry's</span>
-
-</div>
-    </div>
+    <div class="service-card animate-on-scroll"><span class="service-icon">⛺</span><div class="service-title">Tent & Shamiana</div><p class="service-desc">Premium quality tents, shamianas, mandaps, and canopies — beautifully decorated for indoor and outdoor weddings.</p><div class="service-items"><span>Royal Tent</span><span>Shamiana</span><span>Mandap</span><span>Canopy</span><span>Pergola</span></div></div>
+    <div class="service-card animate-on-scroll"><span class="service-icon">💡</span><div class="service-title">Lighting & Décor</div><p class="service-desc">Magical lighting setups — LED walls, fairy lights, draping lights, and dramatic stage illumination.</p><div class="service-items"><span>LED Wall</span><span>Fairy Lights</span><span>Spotlights</span><span>Neon Signs</span><span>Stage Lighting</span></div></div>
+    <div class="service-card animate-on-scroll"><span class="service-icon">🎵</span><div class="service-title">DJ & Sound System</div><p class="service-desc">Top-tier DJ setup with professional sound systems, fog machines, and laser shows for unforgettable celebrations.</p><div class="service-items"><span>DJ Setup</span><span>Sound System</span><span>Digital DJ Wheels for Barat</span><span>Laser Show</span><span>Fog Machine</span></div></div>
+    <div class="service-card animate-on-scroll"><span class="service-icon">🌺</span><div class="service-title">Flower & Floral Art</div><p class="service-desc">Exquisite floral arrangements — from mandap decoration to stage backdrops, path flowers, and car decoration.</p><div class="service-items"><span>Mandap Flowers</span><span>Stage Backdrop</span><span>Car Decoration</span><span>Table Centerpiece</span></div></div>
+    <div class="service-card animate-on-scroll"><span class="service-icon">🍽️</span><div class="service-title">Catering & Hospitality</div><p class="service-desc">Authentic Indian cuisine with live counters, traditional thali setups, and premium catering for all guests.</p><div class="service-items"><span>Live Counters</span><span>Buffet Setup</span><span>Welcome Drinks</span><span>Dessert Counter</span></div></div>
+    <div class="service-card animate-on-scroll"><span class="service-icon">📸</span><div class="service-title">Photography & Video</div><p class="service-desc">Cinematic wedding films and stunning photographs — candid, pre-wedding shoots, and drone coverage.</p><div class="service-items"><span>Candid Photos</span><span>Cinematic Video</span><span>Traditional Video Shoot</span><span>Drone Coverage</span><span>Pre-Wedding</span></div></div>
+    <div class="service-card animate-on-scroll"><span class="service-icon">🎭</span><div class="service-title">Entertainment</div><p class="service-desc">Sanai-Chowki, Dhol players, live band, dance performances, and entertainment acts for every function.</p><div class="service-items"><span>Dhol Waale</span><span>Live Band</span><span>Sangeet Night</span><span>Dance Show</span><span>Fireworks</span></div></div>
+    <div class="service-card animate-on-scroll"><span class="service-icon">🛋️</span><div class="service-title">Furniture & Setup</div><p class="service-desc">Elegant furniture rental — royal chairs, sofas, tables, and complete stage setup for a grand look.</p><div class="service-items"><span>Royal Stage</span><span>Chairs & Sofas</span><span>Photo Booth</span><span>Gate Decoration</span></div></div>
+    <div class="service-card animate-on-scroll"><span class="service-icon">🚗</span><div class="service-title">Guest Management</div><p class="service-desc">Complete guest logistics — transport, accommodation coordination, welcome kits, and hospitality management.</p><div class="service-items"><span>Baraat Setup</span><span>Guest Transport</span><span>Welcome Kits</span><span>Parking Mgmt</span></div></div>
+    <div class="service-card animate-on-scroll"><span class="service-icon">🎆</span><div class="service-title">Wedding Entries</div><p class="service-desc">Royal & dramatic entries for the groom, bride, and baraat — make a stunning grand entrance that everyone remembers forever.</p><div class="service-items"><span>🔥 Pyro Entry</span><span>🐎 Royal Ghodi</span><span>👑 Wedding Baggi</span><span>💡 Lighting Chatri</span><span>💐 Flower Shower</span><span>🎭 Dhol-Tasha</span><span>All Types Entry's</span></div></div>
   </div>
 </section>
 
@@ -693,173 +911,64 @@
   <div class="quote-btns"><a href="https://wa.me/916264880466" target="_blank" class="btn-primary">WhatsApp Us Now</a></div>
 </section>
 
-<!-- ===================== GALLERY — REAL IMAGES ===================== -->
+<!-- GALLERY -->
 <section class="gallery" id="gallery">
   <div class="gallery-intro">
     <div class="section-label">Our Work</div>
     <h2>Moments We've <em>Created</em></h2>
     <p>Every wedding we plan becomes a timeless memory. Here's a glimpse of the magic we create.</p>
   </div>
-
   <div class="gallery-grid">
-
-    <!-- 1. Large left — Grand Mandap -->
-    <div class="gallery-item animate-on-scroll">
-      <img
-        src="images/banner1.jpeg"
-        alt="Grand Wedding Mandap Setup"
-        loading="lazy"
-      />
+    <div class="gallery-item animate-on-scroll" onclick="openLightbox(0)">
+      <img src="images/banner1.jpeg" alt="Grand Wedding Mandap Setup" loading="lazy" />
       <div class="gallery-label">Grand Mandap Setup</div>
-      <div class="gallery-overlay">
-        <div class="gallery-overlay-text">
-          Royal Wedding Mandap
-          <small>Indore, 2026</small>
-        </div>
-      </div>
+      <div class="gallery-overlay"><div class="gallery-overlay-text">Royal Wedding Mandap<small>Indore, 2026</small></div></div>
     </div>
-
-    <!-- 2. Top right — Fairy Lights Décor -->
-    <div class="gallery-item animate-on-scroll">
-      <img
-        src="images/banner2.jpeg"
-        alt="Fairy Light Wedding Decoration"
-        loading="lazy"
-      />
+    <div class="gallery-item animate-on-scroll" onclick="openLightbox(1)">
+      <img src="images/banner2.jpeg" alt="Fairy Light Wedding Decoration" loading="lazy" />
       <div class="gallery-label">Fairy Light Décor</div>
-      <div class="gallery-overlay">
-        <div class="gallery-overlay-text">
-          Magical Lighting
-          <small>Indore, 2025</small>
-        </div>
-      </div>
+      <div class="gallery-overlay"><div class="gallery-overlay-text">Magical Lighting<small>Indore, 2025</small></div></div>
     </div>
-
-    <!-- 3. Top right — Floral Stage -->
-    <div class="gallery-item animate-on-scroll">
-      <img
-        src="images/banner3.jpeg"
-        alt="Floral Stage Decoration"
-        loading="lazy"
-      />
+    <div class="gallery-item animate-on-scroll" onclick="openLightbox(2)">
+      <img src="images/banner3.jpeg" alt="Floral Stage Decoration" loading="lazy" />
       <div class="gallery-label">Floral Stage</div>
-      <div class="gallery-overlay">
-        <div class="gallery-overlay-text">
-          Premium Floral Art
-          <small>Indore, 2024</small>
-        </div>
-      </div>
+      <div class="gallery-overlay"><div class="gallery-overlay-text">Premium Floral Art<small>Indore, 2024</small></div></div>
     </div>
-
-    <!-- 4. Bottom right — DJ Night -->
-    <div class="gallery-item animate-on-scroll">
-      <img
-        src="images/banner4.jpeg"
-        alt="DJ Night Wedding Party"
-        loading="lazy"
-      />
+    <div class="gallery-item animate-on-scroll" onclick="openLightbox(3)">
+      <img src="images/banner4.jpeg" alt="DJ Night Wedding Party" loading="lazy" />
       <div class="gallery-label">DJ Night</div>
-      <div class="gallery-overlay">
-        <div class="gallery-overlay-text">
-          Epic DJ Night
-          <small>Indore, 2024</small>
-        </div>
-      </div>
+      <div class="gallery-overlay"><div class="gallery-overlay-text">Epic DJ Night<small>Indore, 2024</small></div></div>
     </div>
-
-    <!-- 5. Bottom right — Tent Setup -->
-    <div class="gallery-item animate-on-scroll">
-      <img
-        src="images/banner5.jpeg"
-        alt="Royal Wedding Tent Setup"
-        loading="lazy"
-      />
+    <div class="gallery-item animate-on-scroll" onclick="openLightbox(4)">
+      <img src="images/banner5.jpeg" alt="Royal Wedding Tent Setup" loading="lazy" />
       <div class="gallery-label">Tent Setup</div>
-      <div class="gallery-overlay">
-        <div class="gallery-overlay-text">
-          Royal Tent Palace
-          <small>Indore, 2024</small>
-        </div>
-      </div>
+      <div class="gallery-overlay"><div class="gallery-overlay-text">Royal Tent Palace<small>Indore, 2024</small></div></div>
     </div>
-
-  </div>
+    </div>
 </section>
-<!-- ===================== END GALLERY ===================== -->
+
 <!-- VIDEOS SECTION -->
 <section class="videos" id="videos">
-
   <div class="section-label">Wedding Highlights</div>
-
   <h2>Experience The <em>Celebration</em></h2>
-
-  <p class="videos-text">
-    Real baraat moments, DJ nights, wedding entries and unforgettable celebrations captured live.
-  </p>
-
+  <p class="videos-text">Real baraat moments, DJ nights, wedding entries and unforgettable celebrations captured live.</p>
   <div class="video-grid">
-
-    <div class="video-box animate-on-scroll">
-      <video controls playsinline preload="metadata">
-        <source src="videos/video1.mp4" type="video/mp4">
-      </video>
-      <div class="video-caption">Bride & Groom Grand Entry</div>
-    </div>
-
-    <div class="video-box animate-on-scroll">
-      <video controls playsinline preload="metadata">
-        <source src="videos/video2.mp4" type="video/mp4">
-      </video>
-      <div class="video-caption">Royal Baraat Celebration</div>
-    </div>
-
-    <div class="video-box animate-on-scroll">
-      <video controls playsinline preload="metadata">
-        <source src="videos/video3.mp4" type="video/mp4">
-      </video>
-      <div class="video-caption">Wedding Stage Moments</div>
-    </div>
-
-    <div class="video-box animate-on-scroll">
-      <video controls playsinline preload="metadata">
-        <source src="videos/video4.mp4" type="video/mp4">
-      </video>
-      <div class="video-caption">Couple Entry Highlights</div>
-    </div>
-
-    <div class="video-box animate-on-scroll">
-      <video controls playsinline preload="metadata">
-        <source src="videos/video5.mp4" type="video/mp4">
-      </video>
-      <div class="video-caption">Grand Wedding Celebration</div>
-    </div>
-
+    <div class="video-box animate-on-scroll"><video controls playsinline preload="metadata"><source src="videos/video1.mp4" type="video/mp4"></video><div class="video-caption">Bride & Groom Grand Entry</div></div>
+    <div class="video-box animate-on-scroll"><video controls playsinline preload="metadata"><source src="videos/video2.mp4" type="video/mp4"></video><div class="video-caption">Royal Baraat Celebration</div></div>
+    <div class="video-box animate-on-scroll"><video controls playsinline preload="metadata"><source src="videos/video3.mp4" type="video/mp4"></video><div class="video-caption">Wedding Stage Moments</div></div>
+    <div class="video-box animate-on-scroll"><video controls playsinline preload="metadata"><source src="videos/video4.mp4" type="video/mp4"></video><div class="video-caption">Couple Entry Highlights</div></div>
+    <div class="video-box animate-on-scroll"><video controls playsinline preload="metadata"><source src="videos/video5.mp4" type="video/mp4"></video><div class="video-caption">Grand Wedding Celebration</div></div>
   </div>
-
 </section>
+
 <!-- TESTIMONIALS -->
 <section class="testimonials" id="testimonials">
   <div class="section-label">Happy Couples</div>
   <h2>What They <em>Say</em></h2>
   <div class="testi-grid">
-    <div class="testi-card animate-on-scroll">
-      <div class="testi-quote">"</div>
-      <div class="stars">★★★★★</div>
-      <p class="testi-text">Guru Events made our wedding absolutely like a dream! From the tent setup to lighting and DJ — everything was perfect. We couldn't be happier with how it all turned out.</p>
-      <div class="testi-author"><div class="testi-avatar">👰</div><div><div class="testi-name">Priya & Rahul Sharma</div><div class="testi-loc">Indore — December 2024</div></div></div>
-    </div>
-    <div class="testi-card animate-on-scroll">
-      <div class="testi-quote">"</div>
-      <div class="stars">★★★★★</div>
-      <p class="testi-text">The floral decoration was absolutely stunning! The stage looked so beautiful that everyone was speechless. Photography was exceptional too — highly recommended!</p>
-      <div class="testi-author"><div class="testi-avatar">💑</div><div><div class="testi-name">Anjali & Vikram Patel</div><div class="testi-loc">Indore — November 2025</div></div></div>
-    </div>
-    <div class="testi-card animate-on-scroll">
-      <div class="testi-quote">"</div>
-      <div class="stars">★★★★★</div>
-      <p class="testi-text">We went for a custom plan. The DJ show, laser lights, and catering — everything was world class. The team was extremely professional and completed everything on time.</p>
-      <div class="testi-author"><div class="testi-avatar">🤵</div><div><div class="testi-name">Neha & Saurabh Joshi</div><div class="testi-loc">Indore — January 2026</div></div></div>
-    </div>
+    <div class="testi-card animate-on-scroll"><div class="testi-quote">"</div><div class="stars">★★★★★</div><p class="testi-text">Guru Events made our wedding absolutely like a dream! From the tent setup to lighting and DJ — everything was perfect. We couldn't be happier with how it all turned out.</p><div class="testi-author"><div class="testi-avatar">👰</div><div><div class="testi-name">Priya & Rahul Sharma</div><div class="testi-loc">Indore — December 2024</div></div></div></div>
+    <div class="testi-card animate-on-scroll"><div class="testi-quote">"</div><div class="stars">★★★★★</div><p class="testi-text">The floral decoration was absolutely stunning! The stage looked so beautiful that everyone was speechless. Photography was exceptional too — highly recommended!</p><div class="testi-author"><div class="testi-avatar">💑</div><div><div class="testi-name">Anjali & Vikram Patel</div><div class="testi-loc">Indore — November 2025</div></div></div></div>
+    <div class="testi-card animate-on-scroll"><div class="testi-quote">"</div><div class="stars">★★★★★</div><p class="testi-text">We went for a custom plan. The DJ show, laser lights, and catering — everything was world class. The team was extremely professional and completed everything on time.</p><div class="testi-author"><div class="testi-avatar">🤵</div><div><div class="testi-name">Neha & Saurabh Joshi</div><div class="testi-loc">Indore — January 2026</div></div></div></div>
   </div>
 </section>
 
@@ -887,8 +996,9 @@
       <div class="contact-details">
         <div class="contact-item"><div class="contact-icon">📞</div><div><div class="contact-item-label">Call / WhatsApp</div><div class="contact-item-text">+91 62648 80466</div><div class="contact-item-text">+91 74406 33889</div></div></div>
         <div class="contact-item"><div class="contact-icon">📧</div><div><div class="contact-item-label">Email Us</div><div class="contact-item-text">gurudigitalevents@gmail.com</div></div></div>
-        <div class="contact-item"><div class="contact-icon">📍</div><div><div class="contact-item-label">Our Office</div><div class="contact-item-text">101 1st Floor celestial archade vijay nagar, Indore</div></div></div>
-        <div class="contact-item"><div class="contact-icon">🕐</div><div><div class="contact-item-label">Working Hours</div><div class="contact-item-text">Mon–Sun: 9 AM – 8 PM</div></div></div>
+        <div class="contact-item"><div class="contact-icon">📍</div><div><div class="contact-item-label">Our Office</div><div class="contact-item-text">101, 1st floor celestial arcade, Ganga devi nagar, 160, Vijay Nagar, Indore, Madhya Pradesh 452010</div></div></div>
+        <div class="contact-item"><div class="contact-icon">📍</div><div><div class="contact-item-label">Office 2</div><div class="contact-item-text">234 Amrapuri, Bhanghad Road, Mr10 Square, Sukhliya, Indore 452010</div></div></div>
+        <div class="contact-item"><div class="contact-icon">🕐</div><div><div class="contact-item-label">Working Hours</div><div class="contact-item-text">Mon–Sun: 8 AM – 10 PM</div></div></div>
       </div>
     </div>
     <div class="contact-form animate-on-scroll">
@@ -907,19 +1017,273 @@
   </div>
 </section>
 
+<!-- FOOTER -->
 <footer>
   <div class="footer-top">
-    <div class="footer-brand"><span class="nav-logo">Guru <span>Events</span></span><p>India's trusted premium wedding planning service. Creating magical memories since 2012. Based in Indore, serving all of Madhya Pradesh.</p></div>
-    <div class="footer-col"><h4>Services</h4><ul><li><a href="#">Tent & Shamiana</a></li><li><a href="#">Lighting Décor</a></li><li><a href="#">DJ & Sound</a></li><li><a href="#">Flower Decoration</a></li><li><a href="#">Catering</a></li><li><a href="#">Photography</a></li></ul></div>
-    <div class="footer-col"><h4>Quick Links</h4><ul><li><a href="#home">Home</a></li><li><a href="#quote">Get Quote</a></li><li><a href="#gallery">Gallery</a></li><li><a href="#testimonials">Reviews</a></li><li><a href="#contact">Contact</a></li></ul></div>
-    <div class="footer-col"><h4>Location</h4><ul><li><a href="#">Only in Indore</a></li></ul></div>
+    <div class="footer-brand">
+      <span class="nav-logo">Guru <span>Events</span></span>
+      <p>India's trusted premium wedding planning service. Creating magical memories since 2012. Based in Indore, serving all of Madhya Pradesh.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#">Tent & Shamiana</a></li>
+        <li><a href="#">Lighting Décor</a></li>
+        <li><a href="#">DJ & Sound</a></li>
+        <li><a href="#">Flower Decoration</a></li>
+        <li><a href="#">Catering</a></li>
+        <li><a href="#">Photography</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#quote">Get Quote</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#testimonials">Reviews</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Location</h4>
+      <ul>
+        <li><a href="#">Only in Indore</a></li>
+      </ul>
+    </div>
+    <!-- ✅ Instagram column — apni ID yahan daalo -->
+    <div class="footer-col">
+      <h4>Follow Us</h4>
+      <ul>
+        <li>
+          <a class="footer-insta-link" href="https://www.instagram.com/gurudigitalevents" target="_blank" rel="noopener noreferrer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+            Instagram
+          </a>
+        </li>
+      </ul>
+    </div>
   </div>
-  <div class="footer-bottom"><p>© 2025 Guru Digital Sounds & Events. All rights reserved. Made with ❤️ in Indore.</p></div>
+  <div class="footer-bottom">
+    <p>© 2025 Guru Digital Sounds & Events. All rights reserved. Made with ❤️ in Indore.</p>
+  </div>
 </footer>
+
+<!-- ===================== LIGHTBOX ===================== -->
+<div class="lightbox-overlay" id="lightboxOverlay" onclick="lbBgClose(event)">
+  <button class="lightbox-close" onclick="closeLightbox()">&#10005;</button>
+  <div class="lightbox-main">
+    <button class="lightbox-arrow lb-left" onclick="lbPrev(event)">&#8592;</button>
+    <img id="lbMainImg" src="" alt="" />
+    <button class="lightbox-arrow lb-right" onclick="lbNext(event)">&#8594;</button>
+  </div>
+  <div class="lightbox-caption">
+    <span id="lbCaptionTitle"></span>
+    <small id="lbCaptionLoc"></small>
+  </div>
+  <div class="lightbox-counter" id="lbCounter"></div>
+  <div class="lightbox-thumbs" id="lbThumbs"></div>
+</div>
+<!-- ===================== END LIGHTBOX ===================== -->
 
 <a class="wa-float" href="https://wa.me/916264880466?text=Hello! I'm interested in your wedding planning services." target="_blank">💬</a>
 
 <script>
+  // ===================== SWIPER LOGIC =====================
+  const slides = document.querySelectorAll('.swiper-slide-img');
+  const caption = document.getElementById('swiperCaption');
+  const dotsContainer = document.getElementById('swiperDots');
+  const progressBar = document.getElementById('swiperProgress');
+  const swiper = document.getElementById('heroSwiper');
+  const heroLeft = document.querySelector('.hero-left');
+  const heroRight = document.querySelector('.hero-right');
+
+  const captions = [
+    { title: 'Grand Wedding Mandap', loc: 'Indore, 2026' },
+    { title: 'Magical Fairy Lights', loc: 'Indore, 2025' },
+    { title: 'Premium Floral Art', loc: 'Indore, 2024' },
+    { title: 'Epic DJ Night', loc: 'Indore, 2024' },
+    { title: 'Royal Tent Palace', loc: 'Indore, 2024' },
+  ];
+
+  let currentSlide = 0;
+  let autoTimer = null;
+  const SLIDE_DURATION = 3500;
+
+  slides.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'swiper-dot' + (i === 0 ? ' dot-active' : '');
+    dot.onclick = () => goToSlide(i);
+    dotsContainer.appendChild(dot);
+  });
+
+  function updateDots() {
+    document.querySelectorAll('.swiper-dot').forEach((d, i) => {
+      d.classList.toggle('dot-active', i === currentSlide);
+    });
+  }
+
+  function updateCaption(index) {
+    caption.classList.remove('caption-visible');
+    setTimeout(() => {
+      caption.innerHTML = captions[index].title + '<small>' + captions[index].loc + '</small>';
+      caption.classList.add('caption-visible');
+    }, 200);
+  }
+
+  function goToSlide(index) {
+    slides[currentSlide].classList.remove('active');
+    currentSlide = (index + slides.length) % slides.length;
+    slides[currentSlide].classList.add('active');
+    updateDots();
+    updateCaption(currentSlide);
+    resetProgress();
+  }
+
+  function swiperNext() { goToSlide(currentSlide + 1); }
+  function swiperPrev() { goToSlide(currentSlide - 1); }
+
+  function resetProgress() {
+    progressBar.style.transition = 'none';
+    progressBar.style.width = '0%';
+    setTimeout(() => {
+      progressBar.style.transition = 'width ' + SLIDE_DURATION + 'ms linear';
+      progressBar.style.width = '100%';
+    }, 30);
+  }
+
+  function startAuto() {
+    autoTimer = setInterval(swiperNext, SLIDE_DURATION);
+  }
+
+  setTimeout(() => {
+    heroLeft.style.transition = 'opacity 0.8s ease';
+    heroLeft.style.opacity = '0';
+    if (heroRight) {
+      heroRight.style.transition = 'opacity 0.8s ease';
+      heroRight.style.opacity = '0';
+    }
+    setTimeout(() => {
+      heroLeft.style.display = 'none';
+      if (heroRight) heroRight.style.display = 'none';
+      swiper.classList.add('swiper-visible');
+      updateCaption(0);
+      resetProgress();
+      startAuto();
+    }, 800);
+  }, 2000);
+
+  // ===================== LIGHTBOX =====================
+  // Yahan saari images add karo — jo dikhni hain lightbox mein
+  // Gallery pe sirf 5 dikhegi, lightbox mein yeh saari hongi
+  const lbImages = [
+    { src: 'images/banner1.jpeg', title: 'Royal Wedding Mandap', loc: 'Indore, 2026' },
+    { src: 'images/banner2.jpeg', title: 'Magical Fairy Lights', loc: 'Indore, 2025' },
+    { src: 'images/banner3.jpeg', title: 'Premium Floral Art', loc: 'Indore, 2024' },
+    { src: 'images/banner4.jpeg', title: 'Epic DJ Night', loc: 'Indore, 2024' },
+    { src: 'images/banner5.jpeg', title: 'Royal Tent Palace', loc: 'Indore, 2024' },
+    // ➕ Neeche aur images add karo isi format mein:
+     { src: 'images/banner6.png' },
+          { src: 'images/banner7.jpeg' },
+     { src: 'images/banner8.jpeg' },
+     { src: 'images/banner9.jpeg' },
+     { src: 'images/banner10.jpeg' },
+
+     
+    // { src: 'images/gallery7.jpeg', title: 'Baraat Moments', loc: 'Indore, 2025' },
+    // { src: 'images/gallery8.jpeg', title: 'Flower Shower', loc: 'Indore, 2024' },
+  ];
+
+  let lbCurrent = 0;
+  const lbOverlay = document.getElementById('lightboxOverlay');
+  const lbMainImg = document.getElementById('lbMainImg');
+  const lbCaptionTitle = document.getElementById('lbCaptionTitle');
+  const lbCaptionLoc = document.getElementById('lbCaptionLoc');
+  const lbCounter = document.getElementById('lbCounter');
+  const lbThumbs = document.getElementById('lbThumbs');
+
+  // Build thumbnails
+  lbImages.forEach((img, i) => {
+    const th = document.createElement('img');
+    th.src = img.src;
+    th.className = 'lb-thumb' + (i === 0 ? ' lb-thumb-active' : '');
+    th.onclick = (e) => { e.stopPropagation(); lbGoTo(i); };
+    lbThumbs.appendChild(th);
+  });
+
+  function lbGoTo(index) {
+    lbCurrent = (index + lbImages.length) % lbImages.length;
+    lbMainImg.classList.add('lb-fade');
+    setTimeout(() => {
+      lbMainImg.src = lbImages[lbCurrent].src;
+      lbMainImg.alt = lbImages[lbCurrent].title;
+      lbCaptionTitle.textContent = lbImages[lbCurrent].title;
+      lbCaptionLoc.textContent = lbImages[lbCurrent].loc;
+      lbCounter.textContent = (lbCurrent + 1) + ' / ' + lbImages.length;
+      lbMainImg.classList.remove('lb-fade');
+      // Update thumbs
+      document.querySelectorAll('.lb-thumb').forEach((th, i) => {
+        th.classList.toggle('lb-thumb-active', i === lbCurrent);
+      });
+      // Scroll thumb into view
+      const activeTh = lbThumbs.querySelectorAll('.lb-thumb')[lbCurrent];
+      if (activeTh) activeTh.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }, 150);
+  }
+
+  function openLightbox(index) {
+    lbOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    lbGoTo(index);
+  }
+
+  function closeLightbox() {
+    lbOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function lbNext(e) { e.stopPropagation(); lbGoTo(lbCurrent + 1); }
+  function lbPrev(e) { e.stopPropagation(); lbGoTo(lbCurrent - 1); }
+
+  function lbBgClose(e) {
+    if (e.target === lbOverlay) closeLightbox();
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (!lbOverlay.classList.contains('active')) return;
+    if (e.key === 'ArrowRight') lbGoTo(lbCurrent + 1);
+    if (e.key === 'ArrowLeft') lbGoTo(lbCurrent - 1);
+    if (e.key === 'Escape') closeLightbox();
+  });
+
+  // Touch swipe support for lightbox
+  let lbTouchStartX = 0;
+  lbOverlay.addEventListener('touchstart', (e) => { lbTouchStartX = e.touches[0].clientX; });
+  lbOverlay.addEventListener('touchend', (e) => {
+    const diff = lbTouchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) lbGoTo(lbCurrent + 1);
+      else lbGoTo(lbCurrent - 1);
+    }
+  });
+  // ===================== END LIGHTBOX =====================
+
+  document.querySelectorAll('.video-box video').forEach(video => {
+    video.addEventListener('play', function () {
+      document.querySelectorAll('.video-box video').forEach(v => {
+        if (v !== this) {
+          v.pause();
+        }
+      });
+    });
+  });
+
+  // ===================== GENERAL SCRIPTS =====================
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, i) => {
       if (entry.isIntersecting) {
